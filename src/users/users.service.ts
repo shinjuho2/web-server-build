@@ -23,10 +23,13 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    const found = this.findOne(id);
+    this.remove(id);
+    this.users.push({ ...found, ...updateUserDto, updatedAt: new Date() });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    this.findOne(id);
+    this.users = this.users.filter((u) => u.id != id);
   }
 }
