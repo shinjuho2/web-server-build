@@ -9,7 +9,15 @@ export class UsersService {
   private id = 0;
 
   create(createUserDto: CreateUserDto) {
-    this.users.push({ id: ++this.id, ...createUserDto, createdAt: new Date() });
+    const newUser: User = {
+      id: ++this.id,
+      name: createUserDto.name,
+      email: createUserDto.email,
+      phone: createUserDto.phone,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.users.push(newUser);
   }
 
   findAll() {
@@ -17,8 +25,8 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    const found = this.users.find( (u) => u.id === id );
-    if(!found) throw new NotFoundException();
+    const found = this.users.find((u) => u.id === id);
+    if (!found) throw new NotFoundException();
     return found;
   }
 
